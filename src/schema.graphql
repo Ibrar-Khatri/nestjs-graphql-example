@@ -9,5 +9,24 @@ type Book {
 }
 
 type Query {
-  books: [Book!]!
+  getAllBooks: [Book!]!
+  getBookById(bookId: Int!): Book
+}
+
+type Mutation {
+  deleteBookById(bookId: Int!): Boolean!
+  addBook(input: AddBookInput!): Book!
+  updateBook(input: UpdateBookInput!, id: Float!): Book!
+}
+
+input AddBookInput {
+  id: Int!
+  title: String!
+  price: Int!
+}
+
+input UpdateBookInput {
+  id: Int!
+  title: String!
+  price: Int!
 }
