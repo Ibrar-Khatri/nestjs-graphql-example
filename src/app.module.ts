@@ -5,9 +5,13 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { BookModule } from './book/book.module';
 import { join } from 'path';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
+    AuthModule,
+    UserModule,
     GraphQLModule.forRoot({
       driver: ApolloDriver,
       playground: true,
