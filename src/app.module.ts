@@ -4,6 +4,7 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { BookModule } from './book/book.module';
 import { join } from 'path';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
@@ -19,6 +20,16 @@ import { join } from 'path';
       definitions: {
         path: join(process.cwd(), 'src/graphql.ts'),
       },
+    }),
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'book_db',
+      password: 'book_db',
+      database: 'book_db',
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      synchronize: true,
     }),
     BookModule,
   ],

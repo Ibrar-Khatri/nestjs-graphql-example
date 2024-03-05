@@ -11,9 +11,7 @@ import { Book } from './schema/book.schema';
 import { BookService } from './book.service';
 
 @InputType()
-class AddBookInput {
-  @Field(() => Int)
-  id: number;
+export class AddBookInput {
   @Field()
   title: string;
   @Field(() => Int)
@@ -21,7 +19,7 @@ class AddBookInput {
 }
 
 @InputType()
-class UpdateBookInput {
+export class UpdateBookInput {
   @Field(() => Int)
   id: number;
   @Field()
@@ -34,40 +32,26 @@ class UpdateBookInput {
 export class BookResolver {
   constructor(private readonly bookService: BookService) {}
   //Queries and Mutations
-
   @Query((returns) => [Book])
-  getAllBooks(): any {
-    return this.bookService.findAllBooks();
+  getAllBooks() {
+    return this.bookService.getAllBooks();
   }
-
   @Query((returns) => Book, { nullable: true })
-  getBookById(@Args({ name: 'bookId', type: () => Int }) id: number): any {
+  getBookById(@Args({ name: 'bookId', type: () => Int }) id: number) {
     return this.bookService.getBookById(id);
   }
-
   @Mutation((returns) => Boolean)
-  deleteBookById(
-    @Args({ name: 'bookId', type: () => Int }) id: number,
-  ): Boolean {
+  deleteBookById(@Args({ name: 'bookId', type: () => Int }) id: number) {
     return this.bookService.deleteBookById(id);
   }
-
   @Mutation((returns) => Book)
-  addBook(@Args('input') addBookInput: AddBookInput): Book {
-    console.log('🚀 ~ BookResolver ~ addBook ~ addBookInput:', addBookInput);
-    const createdBook = this.bookService.addBook(addBookInput);
-    console.log('🚀 ~ BookResolver ~ addBook ~ createdBook:', createdBook);
+  addBook(@Args('input') input: AddBookInput) {
+    const createdBook = this.bookService.addBook(input);
     return createdBook;
   }
-
   @Mutation((returns) => Book)
-  updateBook(
-    @Args('input') updateBookInput: UpdateBookInput,
-    @Args('id') id: number,
-  ): Book {
-    console.log('🚀 ~ BookResolver ~ updateBookInput:', updateBookInput);
-    const updatedBook = this.bookService.updateBook(id, updateBookInput);
-    console.log('🚀 ~ BookResolver ~ addBook ~ updatedBook:', updatedBook);
+  updateBook(@Args('input') input: UpdateBookInput) {
+    const updatedBook = this.bookService.updateBook(input);
     return updatedBook;
   }
 }

@@ -16,11 +16,10 @@ type Query {
 type Mutation {
   deleteBookById(bookId: Int!): Boolean!
   addBook(input: AddBookInput!): Book!
-  updateBook(input: UpdateBookInput!, id: Float!): Book!
+  updateBook(input: UpdateBookInput!): Book!
 }
 
 input AddBookInput {
-  id: Int!
   title: String!
   price: Int!
 }
